@@ -1,58 +1,12 @@
-import { useRef, useState, useCallback } from "react";
-import html2canvas from "html2canvas";
+import { useState } from "react";
+import { usePrint } from "./usePrint";
 import awardFrame from "./assets/background.png";
 import "./App.css";
 
 function App() {
   const [name, setName] = useState("");
   const [awardContent, setAwardContent] = useState("");
-  const certificateRef = useRef<HTMLDivElement>(null);
-
-  const handlePrint = useCallback(async () => {
-    if (!certificateRef.current) return;
-
-    const canvas = await html2canvas(certificateRef.current, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-    });
-
-    const imageUrl = canvas.toDataURL("image/png");
-
-    // 非表示のiframeを作成して印刷
-    const iframe = document.createElement("iframe");
-    iframe.hidden = true;
-    document.body.appendChild(iframe);
-
-    // 印刷ダイアログが閉じた後にiframeを削除
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data === "printComplete") {
-        document.body.removeChild(iframe);
-        window.removeEventListener("message", handleMessage);
-      }
-    };
-    window.addEventListener("message", handleMessage);
-
-    iframe.srcdoc = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <style>
-            @page { margin: 0; }
-            body { margin: 0; }
-          </style>
-        </head>
-        <body>
-          <img src="${imageUrl}" style="width:100%;" onload="window.print()" />
-          <script>
-            window.onafterprint = () => {
-              window.parent.postMessage("printComplete", "*");
-            };
-          </script>
-        </body>
-      </html>
-    `;
-  }, []);
+  const { ref: certificateRef, handlePrint } = usePrint<HTMLDivElement>();
 
   return (
     <div className="app">
