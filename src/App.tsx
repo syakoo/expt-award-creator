@@ -3,9 +3,12 @@ import { usePrint } from "./usePrint";
 import awardFrame from "./assets/background.png";
 import "./App.css";
 
+const DEFAULT_NAME = "山田 太郎";
+const DEFAULT_AWARD_CONTENT = "あなたは○○において優秀な成績を収めました";
+
 function App() {
-  const [name, setName] = useState("");
-  const [awardContent, setAwardContent] = useState("");
+  const [name, setName] = useState(DEFAULT_NAME);
+  const [awardContent, setAwardContent] = useState(DEFAULT_AWARD_CONTENT);
   const { ref: certificateRef, handlePrint } = usePrint<HTMLDivElement>();
 
   return (
@@ -22,7 +25,7 @@ function App() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="山田 太郎"
+              placeholder={DEFAULT_NAME}
             />
           </div>
 
@@ -32,7 +35,7 @@ function App() {
               id="award-content"
               value={awardContent}
               onChange={(e) => setAwardContent(e.target.value)}
-              placeholder="あなたは○○において優秀な成績を収めました"
+              placeholder={DEFAULT_AWARD_CONTENT}
               rows={4}
             />
           </div>

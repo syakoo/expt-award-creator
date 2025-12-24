@@ -161,46 +161,46 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 120px 60px 60px;
+  padding: 17% 12% 8%;
   color: #2c1810;
   text-align: center;
 }
 
 .certificate-title {
-  font-size: 3rem;
+  font-size: clamp(1.5rem, 6vw, 3rem);
   font-weight: 700;
   letter-spacing: 1em;
   text-indent: 1em; /* letter-spacing補正 */
-  margin-bottom: 1.5rem;
+  margin-bottom: 4%;
   color: #1a1a1a;
 }
 
 .certificate-name {
-  font-size: 2.2rem;
+  font-size: clamp(1.2rem, 4.5vw, 2.2rem);
   font-weight: 600;
-  margin-bottom: 0.3rem;
+  margin-bottom: 1%;
   color: #1a1a1a;
   letter-spacing: 0.3em;
   text-indent: 0.3em; /* letter-spacing補正 */
 }
 
 .certificate-text {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
+  font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+  margin-bottom: 4%;
   color: #333;
 }
 
 .certificate-body {
-  font-size: 1.1rem;
+  font-size: clamp(0.7rem, 2.2vw, 1.1rem);
   line-height: 2;
-  max-width: 500px;
+  max-width: 100%;
   color: #2c1810;
   white-space: pre-wrap;
-  margin-bottom: 2rem;
+  margin-bottom: 5%;
 }
 
 .certificate-date {
-  font-size: 1rem;
+  font-size: clamp(0.6rem, 2vw, 1rem);
   color: #444;
   margin-top: auto;
 }
@@ -214,23 +214,5 @@ body {
   .certificate {
     width: 100%;
     max-width: 500px;
-    height: auto;
-    aspect-ratio: 353 / 500;
-  }
-
-  .certificate-content {
-    padding: 10% 15%;
-  }
-
-  .certificate-title {
-    font-size: 2rem;
-  }
-
-  .certificate-name {
-    font-size: 1.5rem;
-  }
-
-  .certificate-body {
-    font-size: 0.9rem;
   }
 }
