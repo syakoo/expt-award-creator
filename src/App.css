@@ -85,10 +85,16 @@ body {
   min-height: 100px;
 }
 
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .print-button {
   width: 100%;
   padding: 1rem 2rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-family: inherit;
   background: linear-gradient(135deg, #c9a227 0%, #e8d5b7 50%, #c9a227 100%);
   border: none;
@@ -97,7 +103,7 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
   text-shadow: none;
 }
 
@@ -109,6 +115,15 @@ body {
 .print-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.print-button-alt {
+  background: linear-gradient(135deg, #2a5298 0%, #6dd5ed 50%, #2a5298 100%);
+  color: #fff;
+}
+
+.print-button-alt:hover:not(:disabled) {
+  box-shadow: 0 8px 25px rgba(42, 82, 152, 0.4);
 }
 
 /* プレビューセクション */
@@ -209,10 +224,5 @@ body {
 @media (max-width: 1200px) {
   .container {
     grid-template-columns: 1fr;
-  }
-
-  .certificate {
-    width: 100%;
-    max-width: 500px;
   }
 }

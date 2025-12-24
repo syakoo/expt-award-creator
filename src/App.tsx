@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useReactToPrint } from "react-to-print";
 import { usePrint } from "./usePrint";
 import awardFrame from "./assets/background.png";
 import "./App.css";
@@ -9,7 +10,45 @@ const DEFAULT_AWARD_CONTENT = "あなたは○○において優秀な成績を�
 function App() {
   const [name, setName] = useState(DEFAULT_NAME);
   const [awardContent, setAwardContent] = useState(DEFAULT_AWARD_CONTENT);
-  const { ref: certificateRef, handlePrint } = usePrint<HTMLDivElement>();
+  const certificateRef = useRef<HTMLDivElement>(null);
+
+  // iframe 方式の印刷
+  const { handlePrint: handleIframePrint } = usePrint(certificateRef);
+
+  // react-to-print を使った印刷
+  const handleReactToPrint = useReactToPrint({
+    contentRef: certificateRef,
+    documentTitle: "賞状",
+    pageStyle: `
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+      body {
+        margin: 0;
+      }
+      /* 
+       * body > * を指定する理由:
+       * react-to-print は contentRef の DOM を iframe にコピーするため、
+       * 印刷対象の要素は body の直接の子要素になる。
+       * クラス名に依存せず印刷対象を指定できる。
+       *
+       * scale: 元の幅 500px を用紙幅 100vw に拡大
+       */
+      body > * {
+        transform-origin: top left;
+        transform: scale(calc(100vw / 500px));
+      }
+    `,
+    onBeforePrint: async () => {
+      console.debug("[react-to-print] 印刷処理を開始");
+    },
+    onAfterPrint: () => {
+      console.debug("[react-to-print] 印刷ダイアログが閉じられた");
+    },
+  });
+
+  const isDisabled = !name || !awardContent;
 
   return (
     <div className="app">
@@ -40,13 +79,22 @@ function App() {
             />
           </div>
 
-          <button
-            className="print-button"
-            onClick={handlePrint}
-            disabled={!name || !awardContent}
-          >
-            賞状を印刷する
-          </button>
+          <div className="button-group">
+            <button
+              className="print-button"
+              onClick={handleIframePrint}
+              disabled={isDisabled}
+            >
+              印刷 (iframe方式)
+            </button>
+            <button
+              className="print-button print-button-alt"
+              onClick={() => handleReactToPrint()}
+              disabled={isDisabled}
+            >
+              印刷 (react-to-print)
+            </button>
+          </div>
         </div>
 
         {/* 賞状プレビュー */}

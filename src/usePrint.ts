@@ -1,9 +1,7 @@
-import { useRef, useCallback } from "react";
+import { useCallback, type RefObject } from "react";
 import html2canvas from "html2canvas";
 
-export function usePrint<T extends HTMLElement>() {
-  const ref = useRef<T>(null);
-
+export function usePrint<T extends HTMLElement>(ref: RefObject<T | null>) {
   const handlePrint = useCallback(async () => {
     if (!ref.current) return;
 
@@ -56,7 +54,7 @@ export function usePrint<T extends HTMLElement>() {
         </body>
       </html>
     `;
-  }, []);
+  }, [ref]);
 
-  return { ref, handlePrint };
+  return { handlePrint };
 }
