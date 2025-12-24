@@ -11,5 +11,9 @@
 1. ユーザは名前と賞の内容を入力する
 2. ユーザは賞状作成ボタンを押す
 3. ユーザの入力内容と画像をもとに賞状を作成
-4. HTML -> Canvas -> Image URL を生成し、iframe でビュー外に表示
-5. iframe の onLoad イベントで印刷イベントを発火
+4. 印刷イベントを発火
+
+#### 印刷イベントについて
+
+iframe 方式と react-to-print 方式の2種類の印刷方式を用意する
+iframe 方式とは、HTML -> Canvas -> Image URL を生成し、iframe をビュー外に表示、iframe の onLoad イベントで印刷イベントを発火する方式
